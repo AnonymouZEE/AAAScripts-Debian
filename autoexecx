@@ -1,0 +1,25 @@
+
+
+#echo "Screenfetch'ing... please wait!!!"
+#screenfetch
+
+
+# .SH/AUTO
+# make .sh a default extension for scripts
+# echo "* .sh is now a default extension for scripts"
+# command_not_found_handle () {
+#	unset -f command_not_found_handle
+#	x="$1".sh
+#	shift
+#	exec "$x" "$@"
+#	}
+
+
+# SHORTHANDS FOR CLASSES
+alias aa='aaa-'
+alias dk='docker-'
+alias sv='service-'
+
+# PROMPT
+#export PS1='\033[7m[ \$ \h -$(date +%Y.%m.%d~%H.%m.%S)- \w ]\033[0m \n>'
+PS1='\033[7m[ \$ \h -$(date +%Y.%m.%d~%H.%m.%S)- \w ]\033[0m \n>'

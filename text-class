@@ -1,0 +1,36 @@
+###############################################################
+#
+# T E X T 
+#
+#
+
+# source aaa-library.sh >nul
+
+text-(){
+	null
+	}
+
+text-chunk(){
+	null
+	}
+
+
+
+text-xxx(){
+	echo $0
+	echo $@
+
+	if [ -z $3 ]; then
+		echo Need 3 parms... at least 2...
+		echo
+		return 1
+		fi
+		
+	if [ -f $1 ]; then
+		echo No file $1...
+		echo
+		return 2
+		fi
+
+	echo TEXT-XXX
+	}

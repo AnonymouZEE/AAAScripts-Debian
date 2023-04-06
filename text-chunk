@@ -1,0 +1,7 @@
+
+source aaa-library.sh >nul
+source text-library.sh >nul
+
+aaa-log
+
+text-xxx $@

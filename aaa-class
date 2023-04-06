@@ -1,0 +1,289 @@
+###############################################################
+#
+# A A A
+#
+#
+
+
+# declare/typeset -f/-F
+# type x
+# compgen -A function -A alias -A variable aaa_
+
+echo AAA *sh/Library
+echo AAA/ZEE/2023
+echo
+
+
+aaa-000(){
+	# if argumented try to call methods
+	# 2DO*** run action
+	# return $?
+	
+	# else show the actions/methods and properties
+	aaa-scripts $0
+	}
+
+
+aaa-!(){
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scripts/$1*
+	echo
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scriptsX/$1*
+	echo
+	}
+
+
+#
+#
+# ?REPLACE aaa-scripts??
+aaa-code(){
+	aaa-scripts
+	}
+
+
+# EDIT
+#
+# 
+aaa-edit(){
+	local x=?
+	while [[ ! "1230" =~ $x ]]; do
+		echo \(1\)	autoexec
+		echo \(2\)	aaa-
+		echo \(3\)	aaa-class
+		echo \(0\)	\<exit\>
+		echo
+		read -p "?" -t 10 -n 1 -i 1 x
+		done;
+
+	case ${x}
+	in
+		1) nano $AAAScripts/autoexec;;
+		2) nano $AAAScripts/aaa-;;
+		3) nano $AAAScripts/aaa-class;;
+		4) echo;;
+	esac
+
+	}
+
+
+
+
+# help/functions
+#
+# REFACTOR***
+aaa-help(){
+	echo -e -n '\033[1;36m'
+cat<<EOF
+aaa-!        !
+aaa-000      --
+aaa-code     cd  show related actions in Alias/Functions/Scripts
+aaa-edit     ed  edit system files
+aaa-help     hh  this...
+aaa-log      --  show logo/banner
+aaa-message  ms  show message
+aaa-parse    --
+aaa-scripts  sc
+aaa-xxx      xx
+EOF
+	echo -e -n '\033[0;37m'
+	}
+
+
+# LOGO
+#
+# REFACTOR*** stty/size full-line
+aaa-log(){
+	echo '/////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'
+	echo '                                       /  \                                    '
+	echo '                                      / /\ \                                   '
+	echo '                                     / /  \ \                                  '
+	echo '                                     \/____\/                                  '
+	echo '                                      \    /                         ZEE/2020  '
+	echo '                                       \  /                                    '
+	echo '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//////////////////////////////////////'
+	}
+
+
+
+# Message
+#
+# REFACTOR*** 
+aaa-message(){
+	if [ ! -z $1 ]; then aaa-log; fi;
+	echo -e $*
+	}
+
+
+
+# invoked from another calss 
+# $1 is the invoker class id
+# $2 if not present list the actions/methods/scripts
+# $2 if present call the action of the originator class (can be abbreviation as docker/dk)
+# 3..* arguments to pass allong...
+#
+# ATT*** 
+#	avoid ALIAS because they are not expanded to non-interactive shells
+#
+aaa-parse(){
+	# if no arguments no need to parse
+	if [ -z $1 ]; then return 255; fi;
+	
+	# if action/method has no arguments then show scripts/functions/alias
+	if [ -z $2 ]; then aaa-scripts $1; return 0; fi;
+	
+	# get script name from path and strip-off extension
+	# and consume $1 to get action
+	local x=${0##*/}; x=${x%.*};
+	local xx=$x$2
+	
+	# drop $1/file-or-alias and $2/action-or-method
+	shift
+	shift
+
+	# FUNCTION
+	# "" to prevent null type
+	if [ "$(type -t $xx )" == "function" ]; then
+		$xx $*;
+		return $?;	
+		fi;
+		
+	# SCRIPT
+	# REFACTOR*** agnosticize <extension> (.sh .py ...)
+	# resolve to it... and return
+	if [ -x $AAAScripts/$xx ]; then
+		$xx $*;
+		return $?;
+		fi;
+
+
+	# REFACTOR*** for aaa-message
+	aaa-message "" "\n\t" "ERROR***" "\n\t" "no script or alias..." "\n\t" $xx
+
+	return 255;
+	}
+
+
+
+#
+#
+#
+aaa-scripts(){
+	# if no argument then exit error 1
+	if [ -z $1 ]; then
+		echo Syntax: aaa-scripts ?class
+		return 1
+		fi
+
+	# realize <class>-
+	local x="$(basename $1)"
+	echo
+	
+	# ALIAS
+	# ATT*** bash do not propagate ALIAS to non-interactive shell...
+
+	# FUNCTIONS/help
+	echo -e -n '\033[1;32m'
+	echo -e Functions
+	echo -e -------
+	echo -e -n '\033[0;37m'
+
+	${x}help
+	echo
+
+	# SCRIPTS
+	echo -e -n '\033[1;32m'
+	echo -e Scripts
+	echo -e -------
+	echo -e -n '\033[0;37m'
+	ls -la $AAAScripts/$x*
+	# basename $xPath/$xFile*
+	}
+
+
+#
+#
+#
+aaa-scriptsX(){
+
+	# if no argument then exit error 1
+	if [ -z $1 ]; then
+		echo Syntax: aaa-scripts ?class
+		return 1
+		fi
+	
+	# remove the .sh extension
+	# local x="${1/\.sh/}"
+	local x=$1
+	local xPath="$(dirname $1)"
+	local xFile="$(basename $1)"
+	# local xFile="${xFile/\.sh/}"
+
+	# ALIAS
+	echo -e -n '\033[1;32m'
+	echo Alias
+	echo -----
+	echo -e -n '\033[0;37m'
+	compgen -A alias $xFile
+	echo
+	
+	# FUNCTIONS
+	echo -e -n '\033[1;32m'
+	echo -e Functions
+	echo -e ---------
+	echo -e -n '\033[0;37m'
+	compgen -A function $xFile
+	echo
+	
+	# SCRIPTS
+	echo -e -n '\033[1;32m'
+	echo -e Scripts
+	echo -e -------
+	echo -e -n '\033[0;37m'
+	ls -la $AAAScripts/$xFile*
+	# basename $xPath/$xFile*
+	}
+
+
+#
+#
+#
+aaa-xx() { aaa-xxx $@; }
+aaa-xxx() {
+	local x=${0##*/}; x=${x%.*}; x=$x$2;
+	
+	echo
+	echo AAA-Analysis \($x/$( type -t $x )\)
+	echo
+	echo \$\0  -is-  $0
+	echo \$\@  -is-  $@
+	echo \$\*  -is-  $*
+	echo
+	echo "$@"   -from-  \"\$\@\"
+	echo "$*"   -from-  \"\$\*\"
+	echo
+
+	echo [ basename/dirname ]
+	basename $0
+	# basename $0 .sh
+	dirname $0
+	echo
+	
+	echo [ POSIX leaf/no-extension ]
+	# POSIX string manipulations
+	echo ${0##*/}
+	echo ${0%.*}
+	}
+
+
+echo -e "\033[1;32m""Alias:""\033[0;37m" Alias
+compgen -A alias
+echo
+echo -e "\033[1;32m""Functions:""\033[0;37m" Functions
+compgen -A function
+echo
+echo -e "\033[1;32m""Variables""\033[0;37m"  Variables/AAA
+compgen -A variable aaa_
+

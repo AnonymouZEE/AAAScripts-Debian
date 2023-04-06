@@ -1,0 +1,213 @@
+###############################################################
+#
+#  D O C K E resolved
+#
+#
+
+echo AAA/Docker *sh/Library
+echo AAA/ZEE/2023
+echo
+
+
+# PROPERTIES
+# ATT*** '-' not permite in identifiers...
+docker_container="";
+docker_image="";
+
+#
+#
+#
+docker-!(){
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scripts/$1*
+	echo
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scriptsX/$1*
+	echo
+	}
+
+
+
+#docker
+#
+#
+docker-bl() { docker build $@; }
+docker-build() {
+	docker build $@;
+	}
+
+#docker
+#
+#
+docker-ct() { docker-container $@; }
+docker-container() {
+	echo 2DO***
+	}
+
+#docker
+#
+#
+docker-hh() { docker-help $@; }
+docker-help() {
+echo -e -n '\033[1;36m'
+cat<<EOF
+docker-!          !
+docker-!!         !!
+docker-$          $   notes
+docker-build      bl  build a dockerfile
+docker-container  ct  manipulate containers
+docker-image      im  manipulate images
+docker-inspect    in  inspect a container
+docker-kill       kl
+docker-list       ls
+docker-off        --  turn docker service off
+docker-on         --  turn docker service on
+docker-process    ps  ?containers
+docker-reset      rs  reset
+docker-run        --
+docker-search     --
+docker-searchX    --
+docker-state      st
+docker-status     --
+docker-volume     vl
+docker-xxx        xx
+EOF
+echo -e -n '\033[0;37m'
+}
+
+
+#
+#
+#
+docker-im() { docker-image $*; }
+docker-image() { 
+	docker image $*;
+	}
+
+
+
+#
+#
+#
+docker-in() { docker-inspect $@; }
+docker-inspect() { 
+	docker inspect $@;
+	}
+
+
+#
+#
+#
+docker-kl() { docker-kill; }
+docker-kill() { 
+	docker stop $@;
+	}
+
+
+#
+#
+#
+docker-ls() { docker-list; }
+docker-list() { 
+	docker image ls;
+	echo ----------------------------------------
+	docker ps;
+	}
+
+
+#
+#
+#
+docker-off() { 
+	service docker stop;
+	}
+
+#
+#
+#
+docker-on() { 
+	service docker start;
+	}
+
+
+#docker
+#
+#
+docker-ps() { docker-process $@; }
+docker-process() { 
+	docker ps;
+	}
+
+
+
+
+#
+#
+docker-rs() { docker-reset $@; }
+docker-reset() {
+	docker system prune $@;
+	}
+
+#
+#
+#
+docker-run() { 
+	docker run $@;
+	}
+
+
+#
+#
+#
+docker-search() { 
+	docker search $@;
+	}
+
+
+#
+#
+# ?x
+# dtags () { local image="${1}"
+# curl --silent \
+#   "https://registry.hub.docker.com/v2/repositories/library/${image}/tags?page_size=1000" \
+#   | jq -r ".results[].name" | sort --version-sort }
+docker-searchX() { 
+	curl --silent "https://registry.hub.docker.com/v2/repositories/library/${x}/tags?page_size=1024"
+	}
+
+
+
+#
+#
+#
+docker-state() { 
+	echo 2DO***
+	}
+
+#
+#
+#
+docker-status() { 
+	service docker status;
+	}
+
+
+#
+#
+#
+docker-vl() { docker-volume $@; }
+docker-volume() { 
+	docker volume $@;
+	}
+
+
+#
+#
+#
+docker-xx() { docker-xxx $@; }
+docker-xxx() {
+	aaa-xxx $0 xxx $*;
+	}
+

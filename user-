@@ -1,0 +1,24 @@
+
+
+clear
+echo -----------
+echo user- class
+echo -----------
+echo
+echo
+
+# grep -Pozi ":OBS\K[\w\W]*" $0 
+ awk 'f; /^:OBS$/{ f = 1 } /^:OBSX$/{ f = 0 }' user-.sh
+# sed -n '/^:OBS$/,/^:OBSX$/{ /OBS/ !p}' user-.sh
+
+exit 0
+
+:OBS
+>OS-
+>system-
+
+	Syntax:
+	
+	1 12 123 1234 12345
+	A AB ABC ABCD ABCDE
+

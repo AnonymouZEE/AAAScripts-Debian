@@ -1,0 +1,6 @@
+
+source aaa-class  >/dev/nul
+source text-class >/dev/nul
+
+aaa-log
+aaa-scripts $0

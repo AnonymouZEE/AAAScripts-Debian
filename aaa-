@@ -1,0 +1,7 @@
+
+source aaa-class  >/dev/nul
+source text-class >/dev/nul
+
+aaa-log
+aaa-parse $0 $*
+

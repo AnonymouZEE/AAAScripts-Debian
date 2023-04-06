@@ -1,0 +1,20 @@
+less $0; exit 0;
+##################
+
+
+// 
+<root>
+cd ~
+dk im ls
+dk im rm x
+dk bl --tag x ./x
+dk run --rm -i -t -d x
+
+
+
+//
+docker rmi $(docker images -qa -f 'dangling=true')
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -a -q)

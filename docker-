@@ -1,0 +1,6 @@
+
+source aaa-class    >nul
+source docker-class >nul
+
+aaa-log
+aaa-parse $0 $*

@@ -1,0 +1,65 @@
+###############################################################
+#
+#  S E R V I C E
+#
+#
+
+echo AAA/Service *sh/Library
+echo AAA/ZEE/2023
+echo
+
+# shorthands for sv/service- (resolved by aaa-parse() )
+
+
+#
+#
+#
+service-!(){
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scripts/$1*
+	echo
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scriptsX/$1*
+	echo
+	}
+
+
+#
+#
+#
+service-off() { 
+	service --status-all;
+	}
+
+#
+#
+#
+service-on() { 
+	service --status-all;
+	}
+
+
+#
+#
+#
+service-state() { 
+	service --status-all;
+	}
+
+#
+#
+#
+service-status() { 
+	service --status-all;
+	}
+
+
+
+#
+#
+#
+service-xxx() { 
+	aaa-xxx $0 xxx $*;
+	}
