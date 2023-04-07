@@ -26,6 +26,32 @@ service-!(){
 	}
 
 
+
+#docker
+#
+#
+service-hh() { service-help $@; }
+service-help() {
+	echo -e -n '\033[1;36m'
+	cat<<EOF
+>me-service
+
+service-!          !
+service-!!         !!
+service-kill       kl  Hard stop service
+service-list       ls  List existing services
+service-off        --  Start service...
+service-on         --  Stop service...
+service-reset      rs  Rreset
+service-run        --
+service-state      st
+service-status     --
+service-xxx        xx
+EOF
+	echo -e -n '\033[0;37m'
+	}
+
+
 #
 #
 #

@@ -46,6 +46,7 @@ docker-container() {
 	echo 2DO***
 	}
 
+
 #docker
 #
 #
@@ -53,15 +54,17 @@ docker-hh() { docker-help $@; }
 docker-help() {
 echo -e -n '\033[1;36m'
 cat<<EOF
+>me-docker
+
 docker-!          !
 docker-!!         !!
-docker-$          $   notes
 docker-build      bl  build a dockerfile
 docker-container  ct  manipulate containers
 docker-image      im  manipulate images
 docker-inspect    in  inspect a container
 docker-kill       kl
-docker-list       ls
+docker-list       ls  List existing images and running processes
+docker-last       la  Last processes run
 docker-off        --  turn docker service off
 docker-on         --  turn docker service on
 docker-process    ps  ?containers
@@ -103,6 +106,17 @@ docker-inspect() {
 docker-kl() { docker-kill; }
 docker-kill() { 
 	docker stop $@;
+	return $?;
+	}
+
+
+#
+#
+#
+docker-la() { docker-last; }
+docker-last() { 
+	docker ps -l $@;
+	return $?;
 	}
 
 
@@ -114,6 +128,16 @@ docker-list() {
 	docker image ls;
 	echo ----------------------------------------
 	docker ps;
+	return $?;
+	}
+
+
+# invoke external personal scripts me-docker-* (#scriptsX)
+#
+#
+docker-me() {
+	me-docker;
+	return $?;
 	}
 
 
@@ -122,6 +146,7 @@ docker-list() {
 #
 docker-off() { 
 	service docker stop;
+	return $?;
 	}
 
 #
@@ -129,6 +154,7 @@ docker-off() {
 #
 docker-on() { 
 	service docker start;
+	return $?;
 	}
 
 
@@ -137,9 +163,9 @@ docker-on() {
 #
 docker-ps() { docker-process $@; }
 docker-process() { 
-	docker ps;
+	docker ps $@;
+	return $?;
 	}
-
 
 
 
@@ -148,6 +174,7 @@ docker-process() {
 docker-rs() { docker-reset $@; }
 docker-reset() {
 	docker system prune $@;
+	return $?;
 	}
 
 #
@@ -155,6 +182,7 @@ docker-reset() {
 #
 docker-run() { 
 	docker run $@;
+	return $?;
 	}
 
 
@@ -163,6 +191,7 @@ docker-run() {
 #
 docker-search() { 
 	docker search $@;
+	return $?;
 	}
 
 
@@ -178,12 +207,13 @@ docker-searchX() {
 	}
 
 
-
 #
 #
-#
+# ***REFACTOR
+docker-st() { docker-state }
 docker-state() { 
-	echo 2DO***
+	docker-status
+	return $?;
 	}
 
 #
@@ -191,6 +221,7 @@ docker-state() {
 #
 docker-status() { 
 	service docker status;
+	return $?;
 	}
 
 

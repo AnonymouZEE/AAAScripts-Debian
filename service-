@@ -1,6 +1,7 @@
 
-source aaa-class     >nul
-source service-class >nul
+source aaa-class     >/dev/nul
+source service-class >/dev/nul
 
-aaa-log
-aaa-parse $0 $*
+aaa-log;
+echo;
+aaa-parse $0 $@;

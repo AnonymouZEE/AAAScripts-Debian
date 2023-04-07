@@ -75,7 +75,8 @@ echo -e "\033[033m"
 echo
 echo
 echo 3. SETTING PATH
-export PATH=/DAT/#links:/DAT/#scripts:$PATH
+export PATH=/DAT/#links:/DAT/#linksX:/DAT/#scripts:/DAT/#scriptsX:$PATH
+
 echo $PATH | awk 'BEGIN { RS=":"}{print "\t", $1}'
 
 
@@ -88,7 +89,9 @@ echo 4. VARIABLES
 
 export AAA=/DAT/AAA
 export AAALinks=/DAT/#links
+export AAALinksX=/DAT/#linksX
 export AAAScripts=/DAT/#scripts
+export AAAScriptsX=/DAT/#scriptsX
 echo "	AAA         -is-  $AAA"
 echo "	AAALinks    -is-  $AAALinks"
 echo "	AAAScripts  -is-  $AAAScripts"

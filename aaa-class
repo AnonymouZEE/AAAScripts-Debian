@@ -49,12 +49,15 @@ aaa-code(){
 # 
 aaa-edit(){
 	local x=?
+
+	# DIALOG-OPTIONS
+	echo \(1\)	autoexec
+	echo \(2\)	aaa-
+	echo \(3\)	aaa-class
+	echo \(0\)	\<exit\>
+	echo
+
 	while [[ ! "1230" =~ $x ]]; do
-		echo \(1\)	autoexec
-		echo \(2\)	aaa-
-		echo \(3\)	aaa-class
-		echo \(0\)	\<exit\>
-		echo
 		read -p "?" -t 10 -n 1 -i 1 x
 		done;
 
