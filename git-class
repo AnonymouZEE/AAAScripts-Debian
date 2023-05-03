@@ -147,15 +147,23 @@ git-update() {
 	echo -e -n '\033[0;37m'
 	echo
 	git-state
+	
+	echo
 	echo -n Add untracked files to repository! [q] to quit...
 	read -p "?" x
 	if [ "$x" == "q" ]; then return 255; fi;
 	
 	# add untracked files
+	echo
 	git add *
 	
 	# commit
+	echo
 	git commit -m $(date +%Y%m%d-%H%M%S)
+	
+	# update
+	echo
+	git push
 	
 	return $?;
 	}
