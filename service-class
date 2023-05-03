@@ -11,7 +11,7 @@ echo
 # shorthands for sv/service- (resolved by aaa-parse() )
 
 
-#
+# 2DO***
 #
 #
 service-!(){
@@ -27,7 +27,7 @@ service-!(){
 
 
 
-#docker
+# help
 #
 #
 service-hh() { service-help $@; }
@@ -42,7 +42,7 @@ service-kill       kl  Hard stop service
 service-list       ls  List existing services
 service-off        --  Start service...
 service-on         --  Stop service...
-service-reset      rs  Rreset
+service-reset      rs  Reset
 service-run        --
 service-state      st
 service-status     --
@@ -52,33 +52,65 @@ EOF
 	}
 
 
+
+# list/ls
 #
 #
-#
-service-off() { 
-	service --status-all;
+service-ls() { service-list $@; return $?; }
+service-list() { 
+	# 2DO*** use $1 to filter
+	# for now using *-status...
+	service-status $1;
+	return $?;
 	}
+
+
+#
+#
+#
+service-of() { service-off $@; return $?; }
+service-off() { 
+	# could consume $1 to $x and shift 
+	# if futher arguments were significant...
+	service $1 stop;
+	return $?;
+	}
+
 
 #
 #
 #
 service-on() { 
-	service --status-all;
+	# could consume $1 to $x and shift 
+	# if further arguments were significant...
+	if [ -z $1 ]; then
+		
+		return 255; 
+		fi;
+		
+	service $1 start;
+	return $?;
 	}
 
 
 #
 #
 #
+service-ss() { service-state $@; return $?; }
 service-state() { 
-	service --status-all;
+	# could consume $1 to $x and shift 
+	# if futher arguments were significant...
+	service $1 status;
+	return $?;
 	}
 
 #
 #
 #
+service-st() { service-status $@; return $?; }
 service-status() { 
-	service --status-all;
+	service --status-all $@;
+	return $?;
 	}
 
 
@@ -89,3 +121,23 @@ service-status() {
 service-xxx() { 
 	aaa-xxx $0 xxx $*;
 	}
+
+
+# using else because...
+# QUIRK*** if use exit <?> closes the console in bash (not sh/ash)
+# QUIRK*** return complains we are out of a function
+#
+# get class-name from path-script-name (also strip-off extension)
+# and apply arguments to this class-name
+# x=${0##*/}; x=${x%-*};
+# $x-$@
+#
+# ATT***
+#	do not iplement <no-args> option...
+#	causes odd behaviour when source(ing) the class/library
+#
+if [ ! -z $1 ]; then
+	service-$@
+fi;
+
+

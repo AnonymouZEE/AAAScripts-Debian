@@ -1,0 +1,106 @@
+###############################################################
+#
+#  P R O C E S S
+#
+#
+
+echo AAA/Process *sh/Library
+echo AAA/ZEE/2023
+echo
+
+
+# PROPERTIES
+# ATT*** '-' not permite in identifiers...
+process_now="";
+xCommand=/usr/bin/ps
+
+
+#
+#
+#
+process-!(){
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scripts/$1*
+	echo
+	echo Scripts#
+	echo ----------------------------------------
+	ls -la $aaa_scriptsX/$1*
+	echo
+	}
+
+
+
+#docker
+#
+#
+process-hh() { process-help $@; }
+process-help() {
+echo -e -n '\033[1;36m'
+cat<<EOF
+>me-process
+
+process-!     !
+process-help  hh  This text...
+process-kill  kl
+process-list  ls  List existing images and running processes
+process-xxx   xx
+EOF
+echo -e -n '\033[0;37m'
+}
+
+
+
+
+#
+#
+process-in() { process-info $@; return $?; }
+process-info() {
+	$xCommand -p $@
+	return $?;
+	}
+
+
+
+#
+#
+#
+process-kl() { process-kill $@; return $?; }
+process-kill() {
+	process-info $@;
+	kill $@ && echo "Process $@ was kill...";
+	return $?;
+	}
+
+
+
+#
+#
+#
+process-ls() { process-list $@; return $?; }
+process-list() {
+	#/bin/ps $@
+	$xCommand -ely $@
+	return $?;
+	}
+
+
+# Show me-<this> from #scriptsX
+#
+#
+process-me() {
+	me view process;
+	return $?;
+	}
+
+
+
+
+#
+#
+#
+process-xx() { process-xxx $@; return $?; }
+process-xxx() {
+	aaa-xxx $0 xxx $*;
+	}
+

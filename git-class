@@ -1,0 +1,186 @@
+###############################################################
+#
+# A A A
+#
+#
+
+
+echo git-*
+echo AAA/ZEE/2023
+echo
+# define functions/methods/... and continue at bottom
+
+
+git-!(){
+	echo Scripts#
+	ls -la $aaa_scriptsX/git-*
+	echo
+	}
+
+
+
+
+
+# EDIT
+#
+# 
+git-edit(){
+	local x=
+
+	# DIALOG-OPTIONS
+	echo "(1)	autoexec"
+	echo "(2)	aaa-"
+	echo "(3)	aaa-class"
+	echo "(0)	\<exit\>"
+	echo
+
+	while [[ ! "1230" =~ $x ]]; do
+		read -p "?" -t 10 -n 1 -i 1 x
+		done;
+
+	case ${x}
+	in
+		1) echo nano $AAAScripts/autoexec;;
+		2) echo nano $AAAScripts/aaa-;;
+		3) echo nano $AAAScripts/aaa-class;;
+		4) echo;;
+	esac
+
+	}
+
+
+
+
+# help/functions
+#
+# REFACTOR***
+git-hh(){ git-help $@; return $?; }
+git-help(){
+	echo -e -n '\033[1;36m'
+cat<<EOF
+git-edit    ed  edit system files
+git-help    hh  this...
+git-list    ls  Show related actions in Alias/Functions/Scripts
+git-log     lg  show logo/banner
+git-me      me  try to show ???AAAScriptsX/me-aaa
+git-state   st  State...
+git-status  ss  Status...
+git-update  ss  Update the current folder with autotag YYYYMMDD-hhmmss
+git-xxx     xx
+EOF
+	echo -e -n '\033[0;37m'
+	}
+
+
+
+#
+#
+# ?REPLACE aaa-scripts??
+git-ls(){ git-list $@; return $?; }
+git-list(){
+	aaa-code git-;
+	return $?;
+	}
+
+
+
+# if exist a file $AAAScriptsX/me-$1 then show it
+# if $1 is null assume "aaa"
+#
+git-me() {
+	local x=${1:-"aaa"}
+	# if [ -f $AAAScriptsX/me-$x ]; then cat $AAAScriptsX/me-$x; fi;
+	cat $AAAScriptsX/me-$x;
+	return $?;
+	}
+
+
+
+# Message
+#
+# REFACTOR*** 
+aaa-ms(){ aaa-message $@; return $?; }
+aaa-message(){
+	echo -e $*;
+	return $?;
+	}
+
+
+
+#
+#
+#
+git-st() { git-state $@; return $?; }
+git-state() { 
+	# could consume $1 to $x and shift 
+	# if futher arguments were significant...
+	
+	git status
+	
+	return $?;
+	}
+
+
+
+#
+#
+#
+git-ss() { git-status $@; return $?; }
+git-status() { 
+	cat $HOME/.gitconfig
+	return $?;
+	}
+
+
+
+#
+#
+#
+git-up() { git-update $@; return $?; }
+git-update() { 
+	echo 2DO***
+	echo
+	
+	return $?;
+	}
+
+
+#
+#
+# ?rename to aaa-info? aaa-test?? aaa-? ???
+git-xx() { git-xxx $@; return $?; }
+git-xxx() {
+	# get calling scripts name...
+	# can be called from any script
+	local x=${0##*/}; x=${x%.*}; x=$x$2;
+	
+	echo
+	echo AAA-Analysis \($x/$( type -t $x )\)
+	echo
+	echo \$\0  -is-  $0
+	echo \$\@  -is-  $@
+	echo \$\*  -is-  $*
+	echo
+	echo "$@"   -from-  \"\$\@\"
+	echo "$*"   -from-  \"\$\*\"
+	echo
+
+	echo [ basename/dirname ]
+	basename $0
+	# basename $0 .sh
+	dirname $0
+	echo
+	
+	echo [ POSIX leaf/no-extension ]
+	# POSIX string manipulations
+	echo ${0##*/}
+	echo ${0%.*}
+	
+	return $?;
+	}
+
+
+if [ ! -z $1 ]; then
+	git-$@
+fi;
+

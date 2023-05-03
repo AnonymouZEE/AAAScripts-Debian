@@ -1,0 +1,8 @@
+
+source aaa-class >/dev/nul
+source git-class >/dev/nul
+
+aaa-log;
+echo;
+aaa-parse $0 $@;
+

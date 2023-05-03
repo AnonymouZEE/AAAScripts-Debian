@@ -1,0 +1,130 @@
+00
+asdasasa#!/bin/bash
+
+echo '/////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'
+echo '                                       /  \                                    '
+echo '                                      / /\ \                                   '
+echo '                                     / /  \ \                                  '
+echo '                                     \/____\/                                  '
+echo '                                      \    /                         ZEE/2020  '
+echo '                                       \  /                                    '
+echo '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//////////////////////////////////////'
+
+
+# ALIAS-IN #############################
+echo -e "\033[0;31m"
+echo
+echo
+echo 1. AAA ALIAS
+alias ~='cd ~'
+alias home='cd ${HOME}'
+alias apl!='cd /APL'
+alias dat!='cd /DAT'
+alias sys!='cd /SYS'
+alias xxx!='cd /XXX'
+alias l!='cd /DAT/#links'
+alias lx!='cd /DAT/#linksX'
+alias s!='cd /DAT/#scripts'
+alias sx!='cd /DAT/#scriptsX'
+alias aaa!='cd /DAT/aaa'
+
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias md='mkdir'
+alias rd='rm -i'
+alias os='cat /etc/os-release'
+alias wh=which
+
+alias cls='clear'
+alias dir='ls -al --color=auto'
+alias del='rm -i'
+
+alias copy='cp -i'
+alias linux='uname -a'
+
+alias name='uname -a'
+alias cpu='cat /proc/cpuinfo'
+alias fs='ll -R /proc/fs'
+
+### 3RD PARTY(s)
+# alias ex='thunar&'
+# alias edit='leafpad&'
+alias eyes='xeyes'
+alias say='espeak'
+
+alias | awk '{ $1=""; print "\t", substr( $0, 2 )  }'
+
+
+
+# FUNCTIONS-IN #########################
+# while alias not processing arguments we must use functions
+echo -e "\033[0;32m"
+echo
+echo
+echo 2. DEFINING FUNCTIONS
+echo "	ex/thunar"
+echo "	edit/leafpad"
+ex()    { thunar  $@ & };
+# edit() { leafpad $@ & };
+edit()  { geany $@ & };
+editx() { bluefish $@ & };
+
+
+
+# PATH-SET #############################
+echo -e "\033[033m"
+echo
+echo
+echo 3. SETTING PATH
+export PATH=/DAT/#links:/DAT/#linksX:/DAT/#scripts:/DAT/#scriptsX:$PATH
+
+echo $PATH | awk 'BEGIN { RS=":"}{print "\t", $1}'
+
+
+
+# VARIABLES-SET ####### #################
+echo -e "\033[034m"
+echo
+echo
+echo 4. VARIABLES
+
+export AAA=/DAT/AAA
+export AAALinks=/DAT/#links
+export AAALinksX=/DAT/#linksX
+export AAAScripts=/DAT/#scripts
+export AAAScriptsX=/DAT/#scriptsX
+echo "	AAA         -is-  $AAA"
+echo "	AAALinks    -is-  $AAALinks"
+echo "	AAAScripts  -is-  $AAAScripts"
+echo
+# export DISPLAY=:0
+# export DISPLAY=127.0.0.1:0.0
+# export DISPLAY=10.0.0.8:0.0
+export GATEWAY="$(ip route |awk '/^default/{print $3}')"
+export DISPLAY=$(hostname).local:0.0
+export PULSE_SERVER=tcp:${GATEWAY}
+export DISPLAY=$(hostname).local:0.0
+echo "	IP            -is-  $( hostname -I )"
+echo "	Gateway       -is-  $GATEWAY"
+echo "	X-Display     -is-  $DISPLAY"
+echo "	Pulse-Server  -is-  $PULSE_SERVER"
+echo
+export PS1='\033[7m[ \$ \h -$(date +%Y.%m.%d~%H.%m.%S)- \w ]\033[0m \n>'
+#echo "	Prompt  -is-  $PS1"
+
+
+# STATUS ################################
+echo -e "\033[35m"
+cd $HOME
+echo
+echo
+echo 5. STATUS
+
+service xrdp start; echo;
+service xrdp status; echo;
+ls -la --color=never /home; echo;
+pwd; echo;
+
+
+# AAA-* code to memory...
+source /DAT/#scripts/autoexecx

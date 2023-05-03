@@ -18,8 +18,11 @@
 # SHORTHANDS FOR CLASSES
 alias aa='aaa-'
 alias dk='docker-'
+alias gt='git-'
+alias me='me-'
+alias ps='process-'
 alias sv='service-'
 
 # PROMPT
 #export PS1='\033[7m[ \$ \h -$(date +%Y.%m.%d~%H.%m.%S)- \w ]\033[0m \n>'
-PS1='\033[7m[ \$ \h -$(date +%Y.%m.%d~%H.%m.%S)- \w ]\033[0m \n>'
+export PS1='\033[7m[ \$ \h -$(date +%Y.%m.%d~%H.%m.%S)- \w ]\033[0m \n>'

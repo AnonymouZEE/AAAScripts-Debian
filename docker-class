@@ -33,18 +33,52 @@ docker-!(){
 #docker
 #
 #
-docker-bl() { docker build $@; }
+docker-bl() { docker build $@; return $?; }
 docker-build() {
 	docker build $@;
+	return $?;
 	}
+
+
 
 #docker
 #
 #
-docker-ct() { docker-container $@; }
+docker-ct() { docker-container $@; return $?; }
 docker-container() {
-	echo 2DO***
+	echo 2DO*** show container info
+	# docker-process $@;
+	return $?;
 	}
+
+
+
+# docker/CONTAINERS
+#
+#
+docker-cs() { docker-containers $@; return $?; }
+docker-containers() {
+	echo
+	echo CONTAINERS
+	echo ----------------------------------------
+	docker-process $@;
+	return $?;
+	}
+
+
+
+# docker/DIFFERENCES
+#
+#
+docker-df() { docker-difference $@; return $?; }
+docker-difference() {
+	# ?ALERT if container not exit
+	echo DIFFERENCES:
+	echo
+	docker diff $@;
+	return $?;
+	}
+
 
 
 #docker
@@ -56,37 +90,41 @@ echo -e -n '\033[1;36m'
 cat<<EOF
 >me-docker
 
-docker-!          !
-docker-!!         !!
-docker-build      bl  build a dockerfile
-docker-container  ct  manipulate containers
-docker-image      im  manipulate images
-docker-inspect    in  inspect a container
-docker-kill       kl
-docker-list       ls  List existing images and running processes
-docker-last       la  Last processes run
-docker-off        --  turn docker service off
-docker-on         --  turn docker service on
-docker-process    ps  ?containers
-docker-reset      rs  reset
-docker-run        --
-docker-search     --
-docker-searchX    --
-docker-state      st
-docker-status     --
-docker-volume     vl
-docker-xxx        xx
+docker-!           !
+docker-!!          !!
+docker-build       bl  build a dockerfile
+docker-container   ct  manipulate containers
+docker-containers  cs  Show current containers (>*-processes)
+docker-difference  df  differences of original image to running container
+docker-image       im  manipulate images
+docker-inspect     in  inspect a container
+docker-kill        kl
+docker-list        ls  List existing images and running processes
+docker-last        la  Last processes run
+docker-off         --  turn docker service off
+docker-on          --  turn docker service on
+docker-process     ps  ?containers
+docker-reset       rs  reset
+docker-run         --
+docker-search      --
+docker-searchX     --
+docker-state       st
+docker-status      ss
+docker-volume      vl
+docker-xxx         xx
 EOF
 echo -e -n '\033[0;37m'
 }
 
 
+
 #
 #
 #
-docker-im() { docker-image $*; }
+docker-im() { docker-image $*; return $@; }
 docker-image() { 
 	docker image $*;
+	return $@;
 	}
 
 
@@ -94,9 +132,10 @@ docker-image() {
 #
 #
 #
-docker-in() { docker-inspect $@; }
+docker-in() { docker-inspect $@; return $?; }
 docker-inspect() { 
 	docker inspect $@;
+	return $?;
 	}
 
 
@@ -125,20 +164,29 @@ docker-last() {
 #
 docker-ls() { docker-list; }
 docker-list() { 
+	echo
+	echo IMAGES
+	echo ----------------------------------------
 	docker image ls;
+
+	echo
+	echo CONTAINERS
 	echo ----------------------------------------
 	docker ps;
+	
 	return $?;
 	}
 
 
-# invoke external personal scripts me-docker-* (#scriptsX)
-#
+
+# Show me-<this> from #scriptsX
+# via aaa- to generalize aaa-/*- invoker
 #
 docker-me() {
-	me-docker;
+	aaa-me docker;
 	return $?;
 	}
+
 
 
 #
@@ -161,7 +209,7 @@ docker-on() {
 #docker
 #
 #
-docker-ps() { docker-process $@; }
+docker-ps() { docker-process $@; return $?; }
 docker-process() { 
 	docker ps $@;
 	return $?;
@@ -210,15 +258,18 @@ docker-searchX() {
 #
 #
 # ***REFACTOR
-docker-st() { docker-state }
+docker-st() { docker-state $@; return $?; }
 docker-state() { 
 	docker-status
 	return $?;
 	}
 
+
+
 #
 #
 #
+docker-ss() { docker-status $@; return $?; }
 docker-status() { 
 	service docker status;
 	return $?;
@@ -228,17 +279,20 @@ docker-status() {
 #
 #
 #
-docker-vl() { docker-volume $@; }
+docker-vl() { docker-volume $@; return $?; }
 docker-volume() { 
 	docker volume $@;
+	return $?;
 	}
 
 
 #
 #
 #
-docker-xx() { docker-xxx $@; }
+docker-xx() { docker-xxx $@; return $?; }
 docker-xxx() {
 	aaa-xxx $0 xxx $*;
+	return $?;
 	}
+
 

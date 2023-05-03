@@ -1,0 +1,9 @@
+
+source aaa-class     >/dev/nul
+source process-class >/dev/nul
+
+aaa-log;
+echo;
+aaa-parse $0 $@;
+
+

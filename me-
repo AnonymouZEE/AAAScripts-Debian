@@ -1,6 +1,6 @@
 
-source aaa-class  >/dev/nul
-source me-class >/dev/nul
+source aaa-class >/dev/nul
+source me-class  >/dev/nul
 
 aaa-log
 echo

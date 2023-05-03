@@ -11,6 +11,10 @@ echo ME/MY *sh/Library
 echo AAA/ZEE/2023
 echo
 
+# PROPERTIES
+#
+#
+
 
 
 #
@@ -24,17 +28,19 @@ me-code(){
 
 # help/functions
 #
-# REFACTOR***
+#
+me-hh() { me-help $@; return $@; }
 me-help(){
 	echo -e -n '\033[1;36m'
 cat<<EOF
 >\$AAAScriptsX -is- /DAT/#scriptsx/me-*
 
-	me/my
-	are special specific scriptsmaintained apart 
-	por private ans security reasons
-	
-	me-docker
+me-!     !
+me-!!    !!
+
+me-list  ls  List AAAScriptsX/me-*
+me-view  vw  View AAAScriptsX/me-\$1
+me-xxx   xx  test...
 
 EOF
 	echo -e -n '\033[0;37m'
@@ -42,11 +48,33 @@ EOF
 
 
 
+#
+#
+#
+me-ls() { me-list $@; return $?; }
+me-list() {
+	ls -la $AAAScriptsX/me-*;
+	return $?;
+	}
+
+
 
 #
 #
 #
-me-xx() { aaa-xxx $@; }
+me-vw() { me-view $@; return $?; }
+me-view() {
+	aaa-me $2
+	cat $AAAScriptsX/me-$1;
+	return $?;
+	}
+
+
+
+#
+#
+#
+me-xx() { me-xxx $@; }
 me-xxx() {
 	local x=${0##*/}; x=${x%.*}; x=$x$2;
 	

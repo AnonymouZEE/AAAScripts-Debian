@@ -5,23 +5,10 @@
 #
 
 
-# declare/typeset -f/-F
-# type x
-# compgen -A function -A alias -A variable aaa_
-
 echo AAA *sh/Library
 echo AAA/ZEE/2023
 echo
-
-
-aaa-000(){
-	# if argumented try to call methods
-	# 2DO*** run action
-	# return $?
-	
-	# else show the actions/methods and properties
-	aaa-scripts $0
-	}
+# define functions/methods/... and continue at bottom
 
 
 aaa-!(){
@@ -36,19 +23,76 @@ aaa-!(){
 	}
 
 
+
 #
 #
-# ?REPLACE aaa-scripts??
-aaa-code(){
-	aaa-scripts
+# 2DO***
+aaa-al() { aaa-all $@; return $?; }
+aaa-all(){
+	echo 2DO*** 
+	echo show all alias/functions/scripts/...
+	echo show all variables/configs/...
+	
+	return $?;
 	}
+
+
+
+
+# LIST AVAILABLE SCRIPS/METHODS/ACTIONS/ALIAS/...
+# for the argumented class
+#
+aaa-code(){
+	# if no argument then exit error 1
+	if [ -z $1 ]; then
+		echo Syntax: aaa-code ?class
+		return 1
+		fi
+
+	# AAA
+	echo -e -n '\033[1;32m'
+	echo -e AAA
+	echo -e -n '\033[0;33m'
+	echo "* aaa-class <method> <args...>  -to-  invoke class/method"
+	echo "* <class>-help                  -is-  static edited help text"
+	echo "* <oo> <mm> <args...>           -as-  quick short form..." 
+	echo
+
+
+	# ALIAS
+	echo -e -n '\033[1;32m'
+	echo -e Alias
+	echo -e -----
+	echo -e -n '\033[0;37m'
+	echo ATT*** bash do not propagate ALIAS to non-interactive shells...
+	compgen -A alias
+	echo
+
+	# FUNCTIONS/help
+	echo -e -n '\033[1;32m'
+	echo -e Functions
+	echo -e ---------
+	echo -e -n '\033[0;37m'
+	#invoke *-class help
+	#$1class help
+	compgen -A function | grep -i $1
+	echo
+
+	# SCRIPTS
+	echo -e -n '\033[1;32m'
+	echo -e Scripts
+	echo -e -------
+	echo -e -n '\033[0;37m'
+	ls -la $AAAScripts/$1*
+	}
+
 
 
 # EDIT
 #
 # 
 aaa-edit(){
-	local x=?
+	local x=
 
 	# DIALOG-OPTIONS
 	echo \(1\)	autoexec
@@ -77,22 +121,29 @@ aaa-edit(){
 # help/functions
 #
 # REFACTOR***
+aaa-hh(){ aaa-help $@; return $?; }
 aaa-help(){
 	echo -e -n '\033[1;36m'
 cat<<EOF
-aaa-!        !
-aaa-000      --
-aaa-code     cd  show related actions in Alias/Functions/Scripts
-aaa-edit     ed  edit system files
-aaa-help     hh  this...
-aaa-log      --  show logo/banner
-aaa-message  ms  show message
-aaa-parse    --
-aaa-scripts  sc
-aaa-xxx      xx
+aaa-!         !
+aaa-000       --
+aaa-all       al
+aaa-edit      ed  edit system files
+aaa-help      hh  this...
+aaa-list      ls  Show related actions in Alias/Functions/Scripts
+aaa-log       --  show logo/banner
+aaa-me        me  try to show ???AAAScriptsX/me-aaa
+aaa-message   ms  show message
+aaa-parse     --
+aaa-scripts   sc
+aaa-scriptsX  sx
+aaa-state     st  State...
+aaa-status    ss  Status...
+aaa-xxx       xx
 EOF
 	echo -e -n '\033[0;37m'
 	}
+
 
 
 # LOGO
@@ -107,6 +158,34 @@ aaa-log(){
 	echo '                                      \    /                         ZEE/2020  '
 	echo '                                       \  /                                    '
 	echo '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//////////////////////////////////////'
+	
+	# 2DO***
+	# if $aaa_log then log to $aaa_log...
+	# if arguments print them line-by-line...
+	}
+
+
+
+
+#
+#
+# ?REPLACE aaa-scripts??
+aaa-ls(){ aaa-list $@; return $?; }
+aaa-list(){
+	aaa-code aaa-;
+	return $?;
+	}
+
+
+
+# if exist a file $AAAScriptsX/me-$1 then show it
+# if $1 is null assume "aaa"
+#
+aaa-me() {
+	local x=${1:-"aaa"}
+	# if [ -f $AAAScriptsX/me-$x ]; then cat $AAAScriptsX/me-$x; fi;
+	cat $AAAScriptsX/me-$x;
+	return $?;
 	}
 
 
@@ -114,14 +193,16 @@ aaa-log(){
 # Message
 #
 # REFACTOR*** 
+aaa-ms(){ aaa-message $@; return $?; }
 aaa-message(){
-	if [ ! -z $1 ]; then aaa-log; fi;
-	echo -e $*
+	echo -e $*;
+	return $?;
 	}
 
 
-
-# invoked from another calss 
+# used in <class>- scripts
+# like aaa-* -or- service-*
+#
 # $1 is the invoker class id
 # $2 if not present list the actions/methods/scripts
 # $2 if present call the action of the originator class (can be abbreviation as docker/dk)
@@ -130,18 +211,29 @@ aaa-message(){
 # ATT*** 
 #	avoid ALIAS because they are not expanded to non-interactive shells
 #
+# SAMPLES***
+#	aaa-parse /DAT/#scripts/aaa-
+#
+
 aaa-parse(){
-	# if no arguments no need to parse
-	if [ -z $1 ]; then return 255; fi;
+	# if no arguments... no need to parse...
+	if [ -z $1 ]; then 
+		echo aaa-parse/function... no arguments... 
+		return 255; 
+		fi;
+
+	# get class name from $0 path...
+	local x=${0##*/}; x=${x%.*};
 	
 	# if action/method has no arguments then show scripts/functions/alias
-	if [ -z $2 ]; then aaa-scripts $1; return 0; fi;
-	
 	# get script name from path and strip-off extension
-	# and consume $1 to get action
-	local x=${0##*/}; x=${x%.*};
-	local xx=$x$2
+	# use $1 to get action...
+	if [ -z $2 ]; then aaa-code $x; return 0; fi;
 	
+	# if action/method is argumented
+	local xx=$x$2
+
+	# consume/drop
 	# drop $1/file-or-alias and $2/action-or-method
 	shift
 	shift
@@ -173,88 +265,44 @@ aaa-parse(){
 #
 #
 #
-aaa-scripts(){
-	# if no argument then exit error 1
-	if [ -z $1 ]; then
-		echo Syntax: aaa-scripts ?class
-		return 1
-		fi
-
-	# realize <class>-
-	local x="$(basename $1)"
+aaa-st() { aaa-state $@; return $?; }
+aaa-state() { 
+	# could consume $1 to $x and shift 
+	# if futher arguments were significant...
+	echo ----------------------------------------[ PATH ]
+	echo $PATH
 	echo
-	
-	# ALIAS
-	# ATT*** bash do not propagate ALIAS to non-interactive shell...
-
-	# FUNCTIONS/help
-	echo -e -n '\033[1;32m'
-	echo -e Functions
-	echo -e -------
-	echo -e -n '\033[0;37m'
-
-	${x}help
+	echo ----------------------------------------[ AAA* ]
+	echo $AAALinks   \| $AAALinksX
+	echo $AAAScripts \| $AAAScriptsX
 	echo
-
-	# SCRIPTS
-	echo -e -n '\033[1;32m'
-	echo -e Scripts
-	echo -e -------
-	echo -e -n '\033[0;37m'
-	ls -la $AAAScripts/$x*
-	# basename $xPath/$xFile*
+	return $?;
 	}
 
 
-#
-#
-#
-aaa-scriptsX(){
 
-	# if no argument then exit error 1
-	if [ -z $1 ]; then
-		echo Syntax: aaa-scripts ?class
-		return 1
-		fi
-	
-	# remove the .sh extension
-	# local x="${1/\.sh/}"
-	local x=$1
-	local xPath="$(dirname $1)"
-	local xFile="$(basename $1)"
-	# local xFile="${xFile/\.sh/}"
-
-	# ALIAS
-	echo -e -n '\033[1;32m'
-	echo Alias
-	echo -----
-	echo -e -n '\033[0;37m'
-	compgen -A alias $xFile
-	echo
-	
-	# FUNCTIONS
-	echo -e -n '\033[1;32m'
-	echo -e Functions
-	echo -e ---------
-	echo -e -n '\033[0;37m'
-	compgen -A function $xFile
-	echo
-	
-	# SCRIPTS
-	echo -e -n '\033[1;32m'
-	echo -e Scripts
-	echo -e -------
-	echo -e -n '\033[0;37m'
-	ls -la $AAAScripts/$xFile*
-	# basename $xPath/$xFile*
+#
+#
+#
+aaa-ss() { aaa-status $@; return $?; }
+aaa-status() { 
+	# 2DO***
+	# show resume of cpu/mem/disk os/user/processes/...
+	source /DAT/#scripts/service-class
+	service-status $@;
+	return $?;
 	}
 
 
+
+
 #
 #
-#
-aaa-xx() { aaa-xxx $@; }
+# ?rename to aaa-info? aaa-test?? aaa-? ???
+aaa-xx() { aaa-xxx $@; return $?; }
 aaa-xxx() {
+	# get calling scripts name...
+	# can be called from any script
 	local x=${0##*/}; x=${x%.*}; x=$x$2;
 	
 	echo
@@ -278,15 +326,28 @@ aaa-xxx() {
 	# POSIX string manipulations
 	echo ${0##*/}
 	echo ${0%.*}
+	
+	return $?;
 	}
 
 
-echo -e "\033[1;32m""Alias:""\033[0;37m" Alias
-compgen -A alias
-echo
-echo -e "\033[1;32m""Functions:""\033[0;37m" Functions
-compgen -A function
-echo
-echo -e "\033[1;32m""Variables""\033[0;37m"  Variables/AAA
-compgen -A variable aaa_
+# CALL ACTION/METHOD DIRECTLY FROM *-class
+# if argumented try to call a self-method and pass eventual arguments
+# used as ~> ???-class <method> <args...>
+#
+# implemented in <class> works even if aaa- is not found
+# as alternative to aaa-parse <class> <method> <args...>
+#
+# ATT***
+#	do not iplement <no-args> option...
+#	causes odd behaviour when source(ing) the class/library
+#
+if [ ! -z $1 ]; then
+	# get class-name from path-script-name (also strip-off extension)
+	# and apply arguments to this class-name
+	x=${0##*/}; x=${x%-*};
+	$x-$@
+	# QUIRK*** if use exit <?> closes the console in bash (not sh/ash)
+	# QUIRK*** return complains we are out of a function
+fi;
 
