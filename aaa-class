@@ -87,6 +87,17 @@ aaa-code(){
 	}
 
 
+# DATES
+#
+# 
+aaa-date(){ 
+	date
+	date +%Y%m%d-%H%M%S
+	date +%W
+
+	}
+
+
 
 # EDIT
 #
@@ -331,23 +342,10 @@ aaa-xxx() {
 	}
 
 
-# CALL ACTION/METHOD DIRECTLY FROM *-class
-# if argumented try to call a self-method and pass eventual arguments
-# used as ~> ???-class <method> <args...>
-#
-# implemented in <class> works even if aaa- is not found
-# as alternative to aaa-parse <class> <method> <args...>
-#
-# ATT***
-#	do not iplement <no-args> option...
-#	causes odd behaviour when source(ing) the class/library
-#
-if [ ! -z $1 ]; then
-	# get class-name from path-script-name (also strip-off extension)
-	# and apply arguments to this class-name
-	x=${0##*/}; x=${x%-*};
-	$x-$@
-	# QUIRK*** if use exit <?> closes the console in bash (not sh/ash)
-	# QUIRK*** return complains we are out of a function
-fi;
+# fallback to call class methods
+# without pass through aaa-parse
+# do not uncomment in aaa- 
+# because the source(ing) in other classes cause odd behaviour
+# if [ ! -z $1 ]; then service-$@; fi;
+
 

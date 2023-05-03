@@ -123,18 +123,9 @@ service-xxx() {
 	}
 
 
-# using else because...
-# QUIRK*** if use exit <?> closes the console in bash (not sh/ash)
-# QUIRK*** return complains we are out of a function
-#
-# get class-name from path-script-name (also strip-off extension)
-# and apply arguments to this class-name
-# x=${0##*/}; x=${x%-*};
-# $x-$@
-#
-# ATT***
-#	do not iplement <no-args> option...
-#	causes odd behaviour when source(ing) the class/library
+
+# fallback to call class methods
+# without pass through aaa-parse
 #
 if [ ! -z $1 ]; then
 	service-$@

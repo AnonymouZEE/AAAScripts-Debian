@@ -19,8 +19,6 @@ git-!(){
 
 
 
-
-
 # EDIT
 #
 # 
@@ -137,9 +135,27 @@ git-status() {
 #
 #
 git-up() { git-update $@; return $?; }
-git-update() { 
-	echo 2DO***
+git-update() {
+	#local x=
+	
+	# echo -e -n '\033[1;33m'
+	# echo -e "\t[ UPDATE ]"
+	# echo
+	# echo -e -n '\033[0;37m'
+	echo -e -n '\033[1;33m'
+	echo Current folder is [$(pwd)]
+	echo -e -n '\033[0;37m'
 	echo
+	git-state
+	echo -n Add untracked files to repository! [q] to quit...
+	read -p "?" x
+	if [ "$x" == "q" ]; then return 255; fi;
+	
+	# add untracked files
+	git add *
+	
+	# commit
+	git commit -m $(date +%Y%m%d-%H%M%S)
 	
 	return $?;
 	}
@@ -178,9 +194,4 @@ git-xxx() {
 	
 	return $?;
 	}
-
-
-if [ ! -z $1 ]; then
-	git-$@
-fi;
 
