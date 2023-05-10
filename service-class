@@ -30,23 +30,24 @@ service-!(){
 # help
 #
 #
-service-hh() { service-help $@; }
+service-he() { service-help $@; }
 service-help() {
 	echo -e -n '\033[1;36m'
 	cat<<EOF
 >me-service
 
-service-!          !
-service-!!         !!
-service-kill       kl  Hard stop service
-service-list       ls  List existing services
-service-off        --  Start service...
-service-on         --  Stop service...
-service-reset      rs  Reset
-service-run        --
-service-state      st
-service-status     --
-service-xxx        xx
+service-!         !     
+service-!!        !!    
+service-help      he    
+service-kill      kl    Hard stop service
+service-list      ls    List existing services
+service-off       --    Start service...
+service-on        --    Stop service...
+service-reset     rs    Reset
+service-run       --    
+service-state     st    
+service-status    --    
+service-xxx       xx    
 EOF
 	echo -e -n '\033[0;37m'
 	}
@@ -61,6 +62,17 @@ service-list() {
 	# 2DO*** use $1 to filter
 	# for now using *-status...
 	service-status $1;
+	return $?;
+	}
+
+
+
+
+# Show me-<this> from #scriptsX
+# via aaa- to generalize aaa-/*- invoker
+#
+service-me() {
+	aaa-me sv;
 	return $?;
 	}
 

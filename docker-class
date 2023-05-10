@@ -1,12 +1,8 @@
 ###############################################################
 #
-#  D O C K E resolved
+#  D O C K E R
 #
 #
-
-echo AAA/Docker *sh/Library
-echo AAA/ZEE/2023
-echo
 
 
 # PROPERTIES
@@ -81,39 +77,75 @@ docker-difference() {
 
 
 
+# docker/DIFFERENCES
+#
+#
+docker-ex() { docker-execute $@; return $?; }
+docker-execute() {
+
+	if [ -z $1 ]; then
+		echo -e -n '\033[0;32m'
+
+cat<<EOF
+* run a program inside a hot container...
+* if arguments will execute and pass them to action...
+
+	docker exec ~container ~program
+	
+	docker exec -it ~container /bin/sh
+	docker exec -it ~container /bin/bash
+
+EOF
+
+		echo -e -n '\033[0m'
+		
+	else
+	
+		docker exec -it $@;
+
+	fi
+
+	return $?;
+	}
+
+
 #docker
 #
 #
-docker-hh() { docker-help $@; }
+docker-he() { docker-help $@; }
 docker-help() {
+echo -e -n '\033[0;33m'
+echo ">dk me (docker- me)"
+echo ">me vw docker"
+echo -e -n '\033[0m'
+echo
 echo -e -n '\033[1;36m'
 cat<<EOF
->me-docker
-
-docker-!           !
-docker-!!          !!
-docker-build       bl  build a dockerfile
-docker-container   ct  manipulate containers
-docker-containers  cs  Show current containers (>*-processes)
-docker-difference  df  differences of original image to running container
-docker-image       im  manipulate images
-docker-inspect     in  inspect a container
-docker-kill        kl
-docker-list        ls  List existing images and running processes
-docker-last        la  Last processes run
-docker-off         --  turn docker service off
-docker-on          --  turn docker service on
-docker-process     ps  ?containers
-docker-reset       rs  reset
-docker-run         --
-docker-search      --
-docker-searchX     --
-docker-state       st
-docker-status      ss
-docker-volume      vl
-docker-xxx         xx
+docker-!             !     
+docker-!!            !!    
+docker-build         bl    build a dockerfile
+docker-container     ct    manipulate containers
+docker-containers    cs    Show current containers (>*-processes)
+docker-difference    df    differences of original image to running container
+docker-help          he    this information...
+docker-image         im    manipulate images
+docker-inspect       in    inspect a container
+docker-kill          kl    
+docker-list          ls    List existing images and running processes
+docker-last          la    Last processes run
+docker-off           --    turn docker service off
+docker-on            --    turn docker service on
+docker-process       ps    ?containers
+docker-reset         rs    reset
+docker-run           ru    run | ri=interactive | rd=detached
+docker-search        --    
+docker-searchX       --    
+docker-state         st    
+docker-status        ss    
+docker-volume        vl    
+docker-xxx           xx    
 EOF
-echo -e -n '\033[0;37m'
+echo -e -n '\033[0m'
 }
 
 
@@ -142,7 +174,7 @@ docker-inspect() {
 #
 #
 #
-docker-kl() { docker-kill; }
+docker-kl() { docker-kill $@; }
 docker-kill() { 
 	docker stop $@;
 	return $?;
@@ -159,21 +191,31 @@ docker-last() {
 	}
 
 
-#
+# list images/containers(hot|cold)
 #
 #
 docker-ls() { docker-list; }
-docker-list() { 
-	echo
-	echo IMAGES
+docker-list() {
+	echo -e -n '\033[0;32m'
+	echo [ IMAGES ]
+	echo -e -n '\033[0m'
 	echo ----------------------------------------
 	docker image ls;
 
 	echo
-	echo CONTAINERS
+	echo -e -n '\033[0;33m'
+	echo [ CONTAINERS/HOT ]
+	echo -e -n '\033[0m'
 	echo ----------------------------------------
 	docker ps;
-	
+
+	echo
+	echo -e -n '\033[0;34m'
+	echo [ CONTAINERS/COLD ]
+	echo -e -n '\033[0m'
+	echo ----------------------------------------
+	docker ps --filter "status=exited";
+
 	return $?;
 	}
 
@@ -183,7 +225,7 @@ docker-list() {
 # via aaa- to generalize aaa-/*- invoker
 #
 docker-me() {
-	aaa-me docker;
+	aaa-me dk;
 	return $?;
 	}
 
@@ -217,19 +259,84 @@ docker-process() {
 
 
 
+# remove image
 #
 #
-docker-rs() { docker-reset $@; }
+docker-rm() { docker-remove $@; return $?; }
+docker-remove() { 
+	echo -e -n '\033[0;33m'
+	echo -e -n ">docker-kill ~ dk kl"
+	echo -e -n '\033[0m'
+	echo
+	echo
+	docker image rm $@;
+	return $?;
+	}
+
+
+
+
+# reset ecosystem
+#
+#
+docker-rs() { docker-reset $@; return $?; }
 docker-reset() {
 	docker system prune $@;
 	return $?;
 	}
 
+
+
+# hard reset ecosystem
+#
+#
+docker-rsx() { docker-resetX $@; return $?; }
+docker-resetX() {
+	echo -e -n '\033[0;33m';
+	echo "Docker hard reset...";
+	echo -e -n '\033[0m';
+	echo;
+
+	echo Stopping docker service...
+	service docker stop;
+	echo;
+	sleep 1;
+	
+	echo Starting docker service...
+	service docker start;
+	echo;
+	sleep 1;
+
+	echo Ready...
+	echo;
+	
+	# docker system prune $@;
+	return $?;
+	}
+
+
+
 #
 #
 #
-docker-run() { 
-	docker run $@;
+docker-ru() { docker-run $@; return $?; }
+docker-rd() { docker-run -d $@; return $?; }
+docker-ri() { docker-run -i $@; return $?; }
+docker-run() {
+	# docker run -i ubuntu /bin/bash
+	# docker run -d -i ubuntu /bin/bash
+	# docker run $@;
+echo -e -n '\033[0;33m'
+echo ">dk me (docker- me)"
+echo ">me vw docker"
+echo -e -n '\033[0m'
+echo
+echo -e -n '\033[1;36m'
+cat<<EOF
+docker run ~image
+
+EOF
+echo -e -n '\033[0m'
 	return $?;
 	}
 
@@ -237,7 +344,8 @@ docker-run() {
 #
 #
 #
-docker-search() { 
+docker-se() { docker-search $@; return $?; }
+docker-search() {
 	docker search $@;
 	return $?;
 	}
@@ -260,7 +368,7 @@ docker-searchX() {
 # ***REFACTOR
 docker-st() { docker-state $@; return $?; }
 docker-state() { 
-	docker-status
+	service docker status;
 	return $?;
 	}
 
@@ -271,7 +379,7 @@ docker-state() {
 #
 docker-ss() { docker-status $@; return $?; }
 docker-status() { 
-	service docker status;
+	docker info;
 	return $?;
 	}
 

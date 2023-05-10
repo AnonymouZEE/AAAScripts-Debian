@@ -5,6 +5,16 @@
 #
 
 
+# ANSI-INVERT
+# echo -e -n '\033[7m'
+# echo -e -n '\033[0m'
+
+# ANSI YELLOW -and- RESET
+# echo -e -n '\033[0;33m'
+# echo -e -n ">docker-kill ~ dk kl"
+# echo -e -n '\033[0m'
+
+
 echo AAA *sh/Library
 echo AAA/ZEE/2023
 echo
@@ -37,6 +47,18 @@ aaa-all(){
 	}
 
 
+
+
+# FIND CLASSES <*>- -OR- <*>-class
+# 
+# 2REFACTOR***
+aaa-cl() { aaa-classes $@; return $?; }
+aaa-classes(){
+	# ls -la --color /DAT/#scripts/*-;
+	# for x in $AAAScripts/*-; do echo $(basename $x); done
+	for x in $AAAScripts/*-; do echo ${x#/*/*/*}; done
+	return $?;
+	}
 
 
 # LIST AVAILABLE SCRIPS/METHODS/ACTIONS/ALIAS/...
@@ -193,9 +215,9 @@ aaa-list(){
 # if $1 is null assume "aaa"
 #
 aaa-me() {
-	local x=${1:-"aaa"}
+	local x=$1;
 	# if [ -f $AAAScriptsX/me-$x ]; then cat $AAAScriptsX/me-$x; fi;
-	cat $AAAScriptsX/me-$x;
+	ls -la --color $AAAScriptsX/me-$x*;
 	return $?;
 	}
 
@@ -303,6 +325,16 @@ aaa-status() {
 	service-status $@;
 	return $?;
 	}
+
+
+aaa-va() { aaa-variables $@; return $?; }
+aaa-variables() { 
+	# 2DO***
+	declare -x | grep -i aaa | tr -d "declare \-x "
+	# compgen -v | grep -i aaa
+	return $?;
+	}
+
 
 
 

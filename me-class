@@ -29,7 +29,7 @@ me-code(){
 # help/functions
 #
 #
-me-hh() { me-help $@; return $@; }
+me-he() { me-help $@; return $@; }
 me-help(){
 	echo -e -n '\033[1;36m'
 cat<<EOF
@@ -38,6 +38,7 @@ cat<<EOF
 me-!     !
 me-!!    !!
 
+me-help  he  this information...
 me-list  ls  List AAAScriptsX/me-*
 me-view  vw  View AAAScriptsX/me-\$1
 me-xxx   xx  test...
@@ -53,7 +54,7 @@ EOF
 #
 me-ls() { me-list $@; return $?; }
 me-list() {
-	ls -la $AAAScriptsX/me-*;
+	ls -la --color $AAAScriptsX/me-$1*;
 	return $?;
 	}
 

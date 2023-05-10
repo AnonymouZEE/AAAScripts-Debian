@@ -52,19 +52,19 @@ git-edit(){
 # help/functions
 #
 # REFACTOR***
-git-hh(){ git-help $@; return $?; }
+git-he(){ git-help $@; return $?; }
 git-help(){
 	echo -e -n '\033[1;36m'
 cat<<EOF
-git-edit    ed  edit system files
-git-help    hh  this...
-git-list    ls  Show related actions in Alias/Functions/Scripts
-git-log     lg  show logo/banner
-git-me      me  try to show ???AAAScriptsX/me-aaa
-git-state   st  State...
-git-status  ss  Status...
-git-update  ss  Update the current folder with autotag YYYYMMDD-hhmmss
-git-xxx     xx
+git-edit      ed    edit system files
+git-help      he    this...
+git-list      ls    Show related actions in Alias/Functions/Scripts
+git-log       lg    show logo/banner
+git-me        me    try to show ???AAAScriptsX/me-aaa
+git-state     st    State...
+git-status    ss    Status...
+git-update    ss    Update the current folder with autotag YYYYMMDD-hhmmss
+git-xxx       xx    
 EOF
 	echo -e -n '\033[0;37m'
 	}
@@ -86,9 +86,7 @@ git-list(){
 # if $1 is null assume "aaa"
 #
 git-me() {
-	local x=${1:-"aaa"}
-	# if [ -f $AAAScriptsX/me-$x ]; then cat $AAAScriptsX/me-$x; fi;
-	cat $AAAScriptsX/me-$x;
+	aaa-me gt;
 	return $?;
 	}
 
@@ -199,6 +197,20 @@ git-xxx() {
 	# POSIX string manipulations
 	echo ${0##*/}
 	echo ${0%.*}
+	
+	return $?;
+	}
+
+
+#
+#
+#
+git-zp() { git-zip $@; return $?; }
+git-zip() {
+	echo 2DO***
+	echo make a 7z and push to repository...
+	return
+
 	
 	return $?;
 	}

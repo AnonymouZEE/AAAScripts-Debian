@@ -4,5 +4,4 @@ source me-class  >/dev/nul
 
 aaa-log
 echo
-aaa-parse $0 $*
-
+aaa-parse $0 $*;
